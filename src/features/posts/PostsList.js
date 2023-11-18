@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { selectAllPosts, getPostsStatus, getPostsError, fetchPosts } from "./postsSlice"
 import PostsExcerpt from "./PostsExcerpt";
 
+let isFirst = true;
+
 const PostsList = () => {
  const dispatch = useDispatch();
 
@@ -11,10 +13,12 @@ const PostsList = () => {
  const postsError = useSelector(getPostsError);
 
  useEffect(() => {
-  if (postsStatus === 'idle') {
+  if (postsStatus === 'idle' && isFirst) {
    dispatch(fetchPosts())
+
+   isFirst = false;
   }
- }, [postsStatus, dispatch])
+ }, [postsStatus])
 
  let content;
  if (postsStatus === 'loading') {
