@@ -15,6 +15,9 @@ const initialState = {
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
  const response = await axios.get(POSTS_URL)
  return response.data
+
+ // const res = await fetch(POSTS_URL);
+ // return res.json(); // it works with "await res.json()" too
 })
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {

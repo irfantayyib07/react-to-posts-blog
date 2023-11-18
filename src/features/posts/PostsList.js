@@ -20,6 +20,21 @@ const PostsList = () => {
   }
  }, [postsStatus])
 
+ // ! with unwrap()
+ // useEffect(() => {
+ //  (async () => {
+ //   try {
+ //    if (postsStatus === 'idle' && isFirst) {
+ //     await dispatch(fetchPosts()).unwrap()
+ //    }
+ //   } catch (err) {
+ //    console.log(err)
+ //   }
+ //  })()
+
+ //  isFirst = false;
+ // }, [postsStatus])
+
  let content;
  if (postsStatus === 'loading') {
   content = <p>"Loading..."</p>;
