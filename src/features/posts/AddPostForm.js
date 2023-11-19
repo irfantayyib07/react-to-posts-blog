@@ -22,11 +22,11 @@ const AddPostForm = () => {
 
  const canSave = [title, content, userId].every(Boolean) && addRequestStatus === 'idle';
 
- const onSavePostClicked = () => {
+ const onSavePostClicked = async () => {
   if (canSave) {
    try {
     setAddRequestStatus('pending')
-    dispatch(addNewPost({ title, body: content, userId })).unwrap()
+    await dispatch(addNewPost({ title, body: content, userId })).unwrap()
 
     setTitle('')
     setContent('')
@@ -59,11 +59,13 @@ const AddPostForm = () => {
      value={title}
      onChange={onTitleChanged}
     />
+    
     <label htmlFor="postAuthor">Author:</label>
     <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
      <option value=""></option>
      {usersOptions}
     </select>
+    
     <label htmlFor="postContent">Content:</label>
     <textarea
      id="postContent"
@@ -71,6 +73,7 @@ const AddPostForm = () => {
      value={content}
      onChange={onContentChanged}
     />
+
     <button type="button" onClick={onSavePostClicked} disabled={!canSave}>
      Save Post
     </button>

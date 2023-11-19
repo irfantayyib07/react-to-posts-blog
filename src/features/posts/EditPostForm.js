@@ -6,11 +6,13 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { selectAllUsers } from "../users/usersSlice";
 
 const EditPostForm = () => {
- const { postId } = useParams()
+ const postId = Number(useParams().postId)
  const navigate = useNavigate()
 
- const post = useSelector((state) => selectPostById(state, Number(postId)))
+ const post = useSelector((state) => selectPostById(state, postId))
  const users = useSelector(selectAllUsers)
+
+ // console.log(postId, post.id)
 
  const [title, setTitle] = useState(post?.title)
  const [content, setContent] = useState(post?.body)
@@ -33,11 +35,11 @@ const EditPostForm = () => {
 
  const canSave = [title, content, userId].every(Boolean) && requestStatus === 'idle';
 
- const onSavePostClicked = () => {
+ const onSavePostClicked = async () => {
   if (canSave) {
    try {
     setRequestStatus('pending')
-    dispatch(updatePost({ id: post.id, title, body: content, userId, reactions: post.reactions })).unwrap()
+    await dispatch(updatePost({ id: post.id, title, body: content, userId, reactions: post.reactions })).unwrap()
 
     setTitle('')
     setContent('')
@@ -58,10 +60,10 @@ const EditPostForm = () => {
   >{user.name}</option>
  ))
 
- const onDeletePostClicked = () => {
+ const onDeletePostClicked = async () => {
   try {
    setRequestStatus('pending')
-   dispatch(deletePost({ id: post.id })).unwrap()
+   await dispatch(deletePost({ id: post.id })).unwrap()
 
    setTitle('')
    setContent('')
