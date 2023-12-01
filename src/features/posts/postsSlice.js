@@ -147,11 +147,14 @@ export const {
 
 // SELECTORS (for convenience)
 
-// returns the query result object
+// returns the query result object (from cache)
 export const selectPostsResult = extendedApiSlice.endpoints.getPosts.select()
 
 // Creates memoized selector
 const selectPostsData = createSelector(
+ // (state) => {
+ //  console.log(state.api.queries); // its result changes based on thunk initiation (in index.js)
+ // },
  selectPostsResult,
  postsResult => postsResult.data // normalized state object with ids & entities
 )
