@@ -8,7 +8,7 @@ import React from "react";
 
 const PostsExcerpt = ({ postId }) => {
  const post = useSelector(state => selectPostById(state, postId))
- 
+
  return (
   <article>
    <h2>{post.title}</h2>
