@@ -13,7 +13,7 @@ const AddPostForm = () => {
  const [addRequestStatus, setAddRequestStatus] = useState('idle')
 
  const users = useSelector(selectAllUsers);
- 
+
  const onTitleChanged = (e) => setTitle(e.target.value);
  const onContentChanged = (e) => setContent(e.target.value);
  const onAuthorChanged = (e) => setUserId(e.target.value);
@@ -62,7 +62,7 @@ const AddPostForm = () => {
      <option value=""></option>
      {usersOptions}
     </select>
-    
+
     <label htmlFor="postContent">Content:</label>
     <textarea
      id="postContent"
