@@ -8,7 +8,7 @@ import { fetchUsers } from './features/users/usersSlice';
 
 store.dispatch(fetchUsers());
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('site-wrapper'));
 root.render(
  <React.StrictMode>
   <Provider store={store}>
