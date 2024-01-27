@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 store.dispatch(fetchUsers());
 store.dispatch(fetchPosts());
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('site-wrapper'));
 root.render(
  <React.StrictMode>
   <Provider store={store}>
