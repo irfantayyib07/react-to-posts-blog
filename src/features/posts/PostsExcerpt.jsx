@@ -26,26 +26,4 @@ const PostsExcerpt = ({ postId }) => {
  )
 }
 
-// NON-FEATURED VARIANT
-
-// let PostsExcerpt = ({ post }) => {
-//  return (
-//   <article>
-//    <h2>{post.title}</h2>
-
-//    <p className="excerpt">{post.body.substring(0, 75)}</p>
-
-//    <p className="postCredit">
-//     <Link to={`post/${post.id}`}>View Post</Link>
-//     <PostAuthor userId={post.userId}></PostAuthor>
-//     <TimeAgo timestamp={post.date}></TimeAgo>
-//    </p>
-
-//    <ReactionButtons post={post}></ReactionButtons>
-//   </article>
-//  )
-// }
-
-// PostsExcerpt = React.memo(PostsExcerpt); // stops re-rendering upon the change of props it is receiving ("post" in this case)
-
 export default PostsExcerpt

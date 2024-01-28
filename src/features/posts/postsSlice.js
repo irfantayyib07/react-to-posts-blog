@@ -10,7 +10,7 @@ const initialState = postsAdapter.getInitialState()
 
 // SLICE
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
+export const extendedPostApiSlice = apiSlice.injectEndpoints({
  endpoints: builder => ({
   getPosts: builder.query({
    query: () => '/posts',
@@ -114,11 +114,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     // so that a user can't do the same reaction more than once
     body: { reactions }
    }),
+   
    async onQueryStarted({ postId, reactions }, { dispatch, queryFulfilled }) {
     // `updateQueryData` requires the endpoint name and cache key arguments,
     // so it knows which piece of cache state to update
     const patchResult = dispatch(
-     extendedApiSlice.util.updateQueryData('getPosts', undefined, draft => {
+     extendedPostApiSlice.util.updateQueryData('getPosts', undefined, draft => {
       // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
       const post = draft.entities[postId]
       if (post) post.reactions = reactions
@@ -144,20 +145,20 @@ export const {
  useUpdatePostMutation,
  useDeletePostMutation,
  useAddReactionMutation,
-} = extendedApiSlice;
+} = extendedPostApiSlice;
 
 // SELECTORS (for convenience)
 
 // returns the query result object (from cache)
-export const selectPostsResult = extendedApiSlice.endpoints.getPosts.select()
+export const retrieveAllPosts = extendedPostApiSlice.endpoints.getPosts.select()
 
 // Creates memoized selector
-const selectPostsData = createSelector(
+const selectPostState = createSelector(
  // (state) => {
  //  console.log(state.api.queries); // its result changes based on thunk initiation (in index.js)
  // },
- selectPostsResult,
- postsResult => postsResult.data // normalized state object with ids & entities
+ retrieveAllPosts,
+ res => res.data // data is a normalized state object with ids & entities
 )
 
 export const {
@@ -165,4 +166,4 @@ export const {
  selectById: selectPostById,
  selectIds: selectPostIds
  // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState)
+} = postsAdapter.getSelectors(state => selectPostState(state) ?? initialState)
