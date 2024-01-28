@@ -6,7 +6,7 @@ const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts';
 
 const initialState = {
  posts: [],
- status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed'
+ status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
  error: null
 }
 
@@ -30,7 +30,7 @@ const postsSlice = createSlice({ // Immer works in createSlice only
  initialState,
  reducers: {
 
-  postAdded: {
+  addPost: {
    reducer(state, action) {
     state.posts.push(action.payload);
    },
@@ -55,7 +55,7 @@ const postsSlice = createSlice({ // Immer works in createSlice only
    }
   },
 
-  reactionAdded(state, action) {
+  addReaction(state, action) {
    const { postId, reaction } = action.payload
    const existingPost = state.posts.find(post => post.id === postId)
    if (existingPost) {
@@ -69,6 +69,7 @@ const postsSlice = createSlice({ // Immer works in createSlice only
    state.status = 'loading'
   }).addCase(fetchPosts.fulfilled, (state, action) => {
    state.status = 'succeeded'
+
    // Adding date and reactions
    let min = 1;
    const loadedPosts = action.payload.map(post => {
@@ -92,7 +93,7 @@ const postsSlice = createSlice({ // Immer works in createSlice only
    .addCase(addNewPost.fulfilled, (state, action) => {
     // Fix for API post IDs:
     // Creating sortedPosts & assigning the id 
-    // would be not be needed if the fake API 
+    // would not be needed if the fake API 
     // returned accurate new post IDs
     const sortedPosts = state.posts.sort((a, b) => {
      if (a.id > b.id) return 1
@@ -123,6 +124,6 @@ export const selectAllPosts = (state) => state.posts.posts;
 export const getPostsStatus = (state) => state.posts.status;
 export const getPostsError = (state) => state.posts.error;
 
-export const { postAdded, reactionAdded } = postsSlice.actions;
+export const { addPost, addReaction } = postsSlice.actions;
 
 export default postsSlice.reducer;
