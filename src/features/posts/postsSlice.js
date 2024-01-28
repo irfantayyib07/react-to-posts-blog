@@ -10,7 +10,7 @@ const initialState = postsAdapter.getInitialState()
 
 // SLICE
 
-export const extendedPostApiSlice = apiSlice.injectEndpoints({
+export const extendedPostsApiSlice = apiSlice.injectEndpoints({
  endpoints: builder => ({
   getPosts: builder.query({
    query: () => '/posts',
@@ -119,7 +119,7 @@ export const extendedPostApiSlice = apiSlice.injectEndpoints({
     // `updateQueryData` requires the endpoint name and cache key arguments,
     // so it knows which piece of cache state to update
     const patchResult = dispatch(
-     extendedPostApiSlice.util.updateQueryData('getPosts', undefined, draft => {
+     extendedPostsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
       // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
       const post = draft.entities[postId]
       if (post) post.reactions = reactions
@@ -145,15 +145,15 @@ export const {
  useUpdatePostMutation,
  useDeletePostMutation,
  useAddReactionMutation,
-} = extendedPostApiSlice;
+} = extendedPostsApiSlice;
 
 // SELECTORS (for convenience)
 
 // returns the query result object (from cache)
-export const retrieveAllPosts = extendedPostApiSlice.endpoints.getPosts.select()
+export const retrieveAllPosts = extendedPostsApiSlice.endpoints.getPosts.select()
 
 // Creates memoized selector
-const selectPostState = createSelector(
+const selectPostsState = createSelector(
  // (state) => {
  //  console.log(state.api.queries); // its result changes based on thunk initiation (in index.js)
  // },
@@ -166,4 +166,4 @@ export const {
  selectById: selectPostById,
  selectIds: selectPostIds
  // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors(state => selectPostState(state) ?? initialState);
+} = postsAdapter.getSelectors(state => selectPostsState(state) ?? initialState);

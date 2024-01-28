@@ -5,7 +5,7 @@ const usersAdapter = createEntityAdapter({});
 
 const initialState = usersAdapter.getInitialState();
 
-export const extendedUserApiSlice = apiSlice.injectEndpoints({
+export const extendedUsersApiSlice = apiSlice.injectEndpoints({
  endpoints: builder => ({
   getUsers: builder.query({
    query: () => "/users",
@@ -24,9 +24,9 @@ export const extendedUserApiSlice = apiSlice.injectEndpoints({
 
 export const {
  useGetUsersQuery
-} = extendedUserApiSlice;
+} = extendedUsersApiSlice;
 
 export const {
  selectAll: selectAllUsers,
  selectById: selectUserById,
-} = usersAdapter.getSelectors(state => extendedUserApiSlice.endpoints.getUsers.select()(state).data ?? initialState);
+} = usersAdapter.getSelectors(state => extendedUsersApiSlice.endpoints.getUsers.select()(state).data ?? initialState);
