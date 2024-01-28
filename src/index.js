@@ -4,12 +4,12 @@ import './index.css';
 import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
-import { extendedUserApiSlice } from "./features/users/usersSlice";
-import { extendedPostApiSlice } from './features/posts/postsSlice';
+import { extendedUsersApiSlice } from "./features/users/usersSlice";
+import { extendedPostsApiSlice } from './features/posts/postsSlice';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-store.dispatch(extendedPostApiSlice.endpoints.getPosts.initiate()); // initiate thunk
-store.dispatch(extendedUserApiSlice.endpoints.getUsers.initiate());
+store.dispatch(extendedPostsApiSlice.endpoints.getPosts.initiate()); // initiate thunk
+store.dispatch(extendedUsersApiSlice.endpoints.getUsers.initiate());
 
 const root = ReactDOM.createRoot(document.getElementById('site-wrapper'));
 root.render(
