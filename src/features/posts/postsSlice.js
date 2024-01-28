@@ -166,4 +166,4 @@ export const {
  selectById: selectPostById,
  selectIds: selectPostIds
  // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors(state => selectPostState(state) ?? initialState)
+} = postsAdapter.getSelectors(state => selectPostState(state) ?? initialState);
