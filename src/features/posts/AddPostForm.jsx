@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
 import { useNavigate } from "react-router-dom";
 import { useAddNewPostMutation } from "./postsSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 const AddPostForm = () => {
  const [addNewPost, { isLoading }] = useAddNewPostMutation();
@@ -25,7 +26,7 @@ const AddPostForm = () => {
   if (canSave) {
    try {
     navigate('/')
-    await addNewPost({ title, body: content, userId }).unwrap()
+    await addNewPost({ title, body: content, userId, id: +(uuidv4().replaceAll("-", "").replaceAll(/\D/g, "").slice(0, 10))}).unwrap()
 
     setTitle('')
     setContent('')
