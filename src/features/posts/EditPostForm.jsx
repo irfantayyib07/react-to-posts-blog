@@ -58,12 +58,12 @@ const EditPostForm = () => {
 
  const onDeletePostClicked = async () => {
   try {
+   navigate('/')
    await deletePost({ id: post.id }).unwrap()
 
    setTitle('')
    setContent('')
    setUserId('')
-   navigate('/')
   } catch (err) {
    console.error('Failed to delete the post', err)
   }

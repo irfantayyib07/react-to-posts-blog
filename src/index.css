@@ -5,7 +5,7 @@
 }
 
 html {
- font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  background-color: white;
  color: #000;
 }
@@ -21,13 +21,14 @@ button,
 select {
  font: inherit;
  margin-bottom: 1em;
+ padding: .25em .5em;
 }
 
 header {
- padding: 1rem;
+ padding: .75rem 1rem;
  display: flex;
  justify-content: space-between;
- align-items: flex-start;
+ align-items: center;
  background-color: purple;
  color: whitesmoke;
  position: sticky;
@@ -61,7 +62,7 @@ nav a:focus {
 
 main {
  max-width: 500px;
- margin: auto;
+ margin: 0 auto;
 }
 
 section {
@@ -96,6 +97,7 @@ form {
 }
 
 textarea {
+ padding: .25em .5em;
  height: 200px;
 }
 
@@ -127,6 +129,6 @@ textarea {
 }
 
 .deleteButton {
- background-color: palevioletred;
+ background-color: rgb(136, 0, 0);
  color: white;
 }

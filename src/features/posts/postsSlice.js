@@ -90,9 +90,19 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
      date: new Date().toISOString()
     }
    }),
-   invalidatesTags: (result, error, arg) => [
-    { type: 'Post', id: arg.id }
-   ]
+
+   async onQueryStarted({ initialPost }, { dispatch, queryFulfilled }) {
+    const patchResult = dispatch(
+     extendedPostsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
+      postsAdapter.setOne(draft, );
+     })
+    )
+    try {
+     await queryFulfilled
+    } catch {
+     patchResult.undo()
+    }
+   }
   }),
 
   deletePost: builder.mutation({
@@ -101,9 +111,19 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
     method: 'DELETE',
     body: { id }
    }),
-   invalidatesTags: (result, error, arg) => [
-    { type: 'Post', id: arg.id }
-   ]
+
+   async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+    const patchResult = dispatch(
+     extendedPostsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
+      postsAdapter.removeOne(draft, id);
+     })
+    )
+    try {
+     await queryFulfilled
+    } catch {
+     patchResult.undo()
+    }
+   }
   }),
 
   addReaction: builder.mutation({
@@ -114,7 +134,7 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
     // so that a user can't do the same reaction more than once
     body: { reactions }
    }),
-   
+
    async onQueryStarted({ postId, reactions }, { dispatch, queryFulfilled }) {
     // `updateQueryData` requires the endpoint name and cache key arguments,
     // so it knows which piece of cache state to update
