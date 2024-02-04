@@ -24,12 +24,12 @@ const AddPostForm = () => {
  const onSavePostClicked = async () => {
   if (canSave) {
    try {
+    navigate('/')
     await addNewPost({ title, body: content, userId }).unwrap()
 
     setTitle('')
     setContent('')
     setUserId('')
-    navigate('/')
    } catch (err) {
     console.error('Failed to save the post', err)
    }
