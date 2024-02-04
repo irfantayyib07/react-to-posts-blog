@@ -76,9 +76,31 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
      }
     }
    }),
-   invalidatesTags: [
-    { type: 'Post', id: "LIST" }
-   ]
+
+   async onQueryStarted(initialPost, { dispatch, queryFulfilled }) {
+    const patchResult = dispatch(
+     extendedPostsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
+      initialPost = {
+       ...initialPost,
+       userId: Number(initialPost.userId),
+       date: new Date().toISOString(),
+       reactions: {
+        thumbsUp: 0,
+        wow: 0,
+        heart: 0,
+        rocket: 0,
+        coffee: 0
+       }
+      }
+      postsAdapter.upsertOne(draft, initialPost);
+     })
+    )
+    try {
+     await queryFulfilled
+    } catch {
+     patchResult.undo()
+    }
+   }
   }),
 
   updatePost: builder.mutation({
@@ -91,10 +113,11 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
     }
    }),
 
-   async onQueryStarted({ initialPost }, { dispatch, queryFulfilled }) {
+   async onQueryStarted(initialPost, { dispatch, queryFulfilled }) {
     const patchResult = dispatch(
      extendedPostsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
-      postsAdapter.setOne(draft, );
+      initialPost.date = new Date().toISOString();
+      postsAdapter.upsertOne(draft, initialPost);
      })
     )
     try {

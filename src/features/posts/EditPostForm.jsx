@@ -37,12 +37,12 @@ const EditPostForm = () => {
  const onSavePostClicked = async () => {
   if (canSave) {
    try {
+    navigate(`/post/${postId}`)
     await updatePost({ id: post.id, title, body: content, userId, reactions: post.reactions }).unwrap()
 
     setTitle('')
     setContent('')
     setUserId('')
-    navigate(`/post/${postId}`)
    } catch (err) {
     console.error('Failed to save the post', err)
    }
