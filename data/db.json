@@ -793,6 +793,20 @@
       "id": 100,
       "title": "at nam consequatur ea labore ea harum",
       "body": "cupiditate quo est a modi nesciunt soluta\nipsa voluptas error itaque dicta in\nautem qui minus magnam et distinctio eum\naccusamus ratione error aut"
+    },
+    {
+      "id": 3822440542,
+      "title": "My First Post",
+      "body": "Hey there",
+      "userId": 1,
+      "reactions": {
+        "thumbsUp": 0,
+        "wow": 0,
+        "heart": 0,
+        "rocket": 0,
+        "coffee": 0
+      },
+      "date": "2024-02-04T12:09:22.553Z"
     }
   ]
 }
