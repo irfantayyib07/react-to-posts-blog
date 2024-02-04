@@ -2,6 +2,7 @@ import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
 import { apiSlice } from "../api/apiSlice";
 import { v4 as uuidv4 } from 'uuid';
+import { store } from "../../app/store"
 
 const postsAdapter = createEntityAdapter({
  sortComparer: (a, b) => b.date.localeCompare(a.date)
@@ -68,6 +69,7 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
      ...initialPost,
      userId: Number(initialPost.userId),
      date: new Date().toISOString(),
+     id: +(uuidv4().replaceAll("-", "").replaceAll(/\D/g, "").slice(0, 10)),
      reactions: {
       thumbsUp: 0,
       wow: 0,
@@ -78,22 +80,13 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
     }
    }),
 
-   transformResponse: (res, meta, arg) => {
-    postsAdapter.updateOne({
-     id: "temporaryID",
-     changes: {
-      id: res.id,
-     }
-    })
-   },
-
    async onQueryStarted(initialPost, { dispatch, queryFulfilled }) {
     const patchResult = dispatch(
      extendedPostsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
       initialPost = {
        ...initialPost,
        userId: Number(initialPost.userId),
-       id: "temporaryID",
+       id: +(uuidv4().replaceAll("-", "").replaceAll(/\D/g, "").slice(0, 10)),
        date: new Date().toISOString(),
        reactions: {
         thumbsUp: 0,
@@ -108,6 +101,7 @@ export const extendedPostsApiSlice = apiSlice.injectEndpoints({
     )
     try {
      await queryFulfilled
+     dispatch(extendedPostsApiSlice.util.invalidateTags([{ type: "Post", id: "LIST" }]));
     } catch {
      patchResult.undo()
     }
